@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Register For A Process</title>
+    <style>
+        .contactable-type {
+            display: none;
+        }
+
+        .show {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="notifier">
+
+    </div>
+    <form action="/new-participant" method="post">
+        <div>
+            <label for="type">Type:</label>
+
+            <select id="type" name="type">
+                <option value="phone">Phone</option>
+                <option value="mattermost">Mattermost</option>
+            </select>
+        </div>
+        <div class="contactable-type show" id="phone">
+            <label for="phone-number">Number:</label>
+            <input type="text" id="phone-number" name="phone-number" placeholder="+12223334444">
+        </div>
+        <div class="contactable-type" id="mattermost">
+            <label for="mattermost-username">Username:</label>
+            <input type="text" id="mattermost-username" name="mattermost-username">
+            @
+            <label for="mattermost-chat-server">Chat Server URL:</label>
+            <input type="text" id="mattermost-chat-server" name="mattermost-chat-server" placeholder="https://chat.server.org" value="https://">
+        </div>
+        <input type="hidden" id="id" name="id"></input>
+        <div class="button">
+            <button type="submit">Participate</button>
+        </div>
+    </form>
+
+
+    <script>
+
+        function checkForSuccess(field) {
+            const url = window.location.href;
+            if (url.indexOf('?' + field) != -1)
+                return true;
+            else if (url.indexOf('&' + field) != -1)
+                return true;
+            return false
+        }
+
+        // display feedback messages, according
+        // to url query params
+        if (checkForSuccess('success')) {
+            document.getElementById('notifier').innerText = 'You were successfully registered.'
+        } else if (checkForSuccess('failure')) {
+            document.getElementById('notifier').innerText = 'The input is invalid.'
+        }
+
+        // handle the onchange events for the 'type' select field
+        // toggling the display of particular form fields associated
+        // with that type
+        document.getElementById('type').onchange = event => {
+            // the type from the option value
+            const type = event.target.value
+
+            // hide all the other type form fields
+            const nodes = document.getElementsByClassName('contactable-type')
+            for (let i = 0; nodes[i]; i++) {
+                nodes[i].classList.remove('show')
+            }
+            // show the form field for the selected type
+            nodes[type].classList.add('show')
+        }
+
+        // bind mattermost fields event listeners
+        // to update the hidden id field
+        function updateIdForMattermost() {
+            const username = document.getElementById('mattermost-username').value
+            const chatServer = document.getElementById('mattermost-chat-server').value
+            document.getElementById('id').value = `${username}@${chatServer}`
+            console.log(`${username}@${chatServer}`)
+        }
+        document.getElementById('mattermost-username').onkeyup = updateIdForMattermost
+        document.getElementById('mattermost-chat-server').onkeyup = updateIdForMattermost
+
+
+        // bind phone number fields event listeners
+        // to update the hidden id field
+        document.getElementById('phone-number').onkeyup = (event) => {
+            document.getElementById('id').value = event.target.value
+        }
+    </script>
+</body>
+
+</html>
