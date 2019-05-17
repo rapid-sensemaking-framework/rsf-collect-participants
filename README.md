@@ -57,13 +57,15 @@ Expectations for `input.json`:
 
 ___
 
-### `rsfCollecParticipants(maxParticipants, maxTime, callback)`
+### `rsfCollecParticipants(port, maxParticipants, maxTime, callback)`
 
 How it works:
 
 - it will set up a web server which serves a form for potential participants to register
 - it will shut down the web server and stop collecting results because the `maxTime` came to pass, or
 - it will shut down the web server and stop collecting results because the `maxParticipants` number has been reached
+
+`port` : `Number`, the port on which to run the temporary webserver
 
 `maxTime` : `Number`, the number of milliseconds to wait until stopping this process automatically
 
