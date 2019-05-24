@@ -1,6 +1,6 @@
 {
   "name": "rsf-collect-participants",
-  "version": "0.0.1",
+  "version": "0.0.11",
   "description": "A starter template for modules that want to work as RSF Operators",
   "main": "index.js",
   "scripts": {
