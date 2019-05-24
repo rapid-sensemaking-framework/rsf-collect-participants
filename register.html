@@ -89,7 +89,6 @@
             const username = document.getElementById('mattermost-username').value
             const chatServer = document.getElementById('mattermost-chat-server').value
             document.getElementById('id').value = `${username}@${chatServer}`
-            console.log(`${username}@${chatServer}`)
         }
         document.getElementById('mattermost-username').onkeyup = updateIdForMattermost
         document.getElementById('mattermost-chat-server').onkeyup = updateIdForMattermost

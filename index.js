@@ -42,7 +42,6 @@ const rsfCollectParticipants = (port, maxParticipants, maxTime, callback) => {
     
     // setup web server... collect participant configs
     app.post('/new-participant', (req, res) => {
-        console.log('woohoo', req.body)
         const input = req.body
         
         if (!validInput(input)) {
