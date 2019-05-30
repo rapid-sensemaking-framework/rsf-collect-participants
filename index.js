@@ -36,7 +36,7 @@ const rsfCollectParticipants = (port, maxParticipants, maxTime, callback) => {
         }
     }
 
-    app.get('/register', (req, res) => {
+    app.get('/', (req, res) => {
         res.sendFile(__dirname + '/register.html')
     })
     
@@ -45,11 +45,11 @@ const rsfCollectParticipants = (port, maxParticipants, maxTime, callback) => {
         const input = req.body
         
         if (!validInput(input)) {
-            res.redirect('/register?failure')
+            res.redirect('/?failure')
             return
         }
 
-        res.redirect('/register?success')
+        res.redirect('/?success')
         results.push({
             id: input.id,
             type: input.type,
