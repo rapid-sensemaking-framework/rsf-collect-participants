@@ -29,10 +29,14 @@ const rsfCollectParticipants = (port, maxParticipants, maxTime, callback) => {
     let calledComplete = false
     const complete = () => {
         if (!calledComplete) {
-            server.close()
-            clearTimeout(timeoutId)
-            callback(results)
             calledComplete = true
+            clearTimeout(timeoutId)
+            setTimeout(() => {
+                // give it enough time to send a response to the
+                // last registered participant
+                server.close()
+                callback(results)
+            }, 3000)
         }
     }
 
